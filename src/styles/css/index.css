@@ -1,0 +1,36 @@
+* {
+  box-sizing: border-box; }
+
+html {
+  height: 100%; }
+
+body {
+  background: #E5ABCB;
+  height: 100%;
+  margin: 2px; }
+
+.svg-sprite {
+  display: none; }
+
+.container {
+  margin: 0 auto;
+  padding: 5px;
+  padding-top: 0;
+  border-radius: 10px;
+  width: 100%;
+  text-align: center; }
+  @media (min-width: 40em) {
+    .container {
+      padding: 10px;
+      box-shadow: 0; } }
+
+.c-app__container {
+  text-align: center;
+  display: inline-block; }
+
+.brand {
+  font-size: 3em;
+  margin: 0 auto 10px auto;
+  text-align: center;
+  color: #B44E86;
+  text-shadow: 0 -1px 1px #992E69, -1px -2px 1px #7B154D, -1px -1px 13px #fff; }

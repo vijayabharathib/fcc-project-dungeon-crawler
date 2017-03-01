@@ -1,0 +1,8 @@
+@import  'settings';
+.c-cell--alive {
+  background: $color-secondary-2-3; }
+
+.c-cell--dead {
+  background: $color-secondary-2-1;
+  background: transparentize($color-white,.8);
+}

@@ -1,0 +1,69 @@
+$color-white: #fff;
+$color-black: #000;
+$color-gun-metal: #2c3539;
+$color-dark-slate-grey: #25383c;
+
+
+$color-primary-0: #4CAF52;	// Main Primary color */
+$color-primary-1: #A9E2AC;
+$color-primary-2: #77CC7D;
+$color-primary-3: #2D9534;
+$color-primary-4: #15781B;
+
+$color-secondary-1-0: #DF9B61;	// Main Secondary color (1) */
+$color-secondary-1-1: #FFDCBE;
+$color-secondary-1-2: #FFC695;
+$color-secondary-1-3: #BD7639;
+$color-secondary-1-4: #99551A;
+
+$color-secondary-2-0: #B44E86;	// Main Secondary color (2) */
+$color-secondary-2-1: #E5ABCB;
+$color-secondary-2-2: #D17AAA;
+$color-secondary-2-3: #992E69;
+$color-secondary-2-4: #7B154D;
+
+
+
+// As RGBa codes */
+
+$rgba-primary-0: rgba( 76,175, 82,1);	// Main Primary color */
+$rgba-primary-1: rgba(169,226,172,1);
+$rgba-primary-2: rgba(119,204,125,1);
+$rgba-primary-3: rgba( 45,149, 52,1);
+$rgba-primary-4: rgba( 21,120, 27,1);
+
+$rgba-secondary-1-0: rgba(223,155, 97,1);	// Main Secondary color (1) */
+$rgba-secondary-1-1: rgba(255,220,190,1);
+$rgba-secondary-1-2: rgba(255,198,149,1);
+$rgba-secondary-1-3: rgba(189,118, 57,1);
+$rgba-secondary-1-4: rgba(153, 85, 26,1);
+
+$rgba-secondary-2-0: rgba(180, 78,134,1);	// Main Secondary color (2) */
+$rgba-secondary-2-1: rgba(229,171,203,1);
+$rgba-secondary-2-2: rgba(209,122,170,1);
+$rgba-secondary-2-3: rgba(153, 46,105,1);
+$rgba-secondary-2-4: rgba(123, 21, 77,1);
+
+
+
+// As RGBa codes */
+
+$rgba-primary-0: rgba(244,210,180,1);	// Main Primary color */
+$rgba-primary-1: rgba(255,248,241,1);
+$rgba-primary-2: rgba(255,236,218,1);
+$rgba-primary-3: rgba(207,163,123,1);
+$rgba-primary-4: rgba(171,121, 75,1);
+
+$rgba-secondary-1-0: rgba(126,136,164,1);	// Main Secondary color (1) */
+$rgba-secondary-1-1: rgba(217,220,228,1);
+$rgba-secondary-1-2: rgba(171,178,196,1);
+$rgba-secondary-1-3: rgba( 89,103,139,1);
+$rgba-secondary-1-4: rgba( 58, 73,115,1);
+
+$rgba-secondary-2-0: rgba(140,189,146,1);	// Main Secondary color (2) */
+$rgba-secondary-2-1: rgba(224,237,226,1);
+$rgba-secondary-2-2: rgba(184,215,187,1);
+$rgba-secondary-2-3: rgba( 96,160,104,1);
+$rgba-secondary-2-4: rgba( 58,133, 68,1);
+
+$color-black-70: transparentize($color-black,.3);

@@ -1,0 +1,62 @@
+.c-game__board {
+  margin: 0 auto;
+  padding: 3px;
+  background: #E5ABCB;
+  border-radius: 3px;
+  list-style: none; }
+  @media (min-width: 50em) {
+    .c-game__board {
+      border: 2px solid #2c3539;
+      border-left: 0;
+      border-bottom: 0;
+      padding: 5px; } }
+  .c-game__board li {
+    margin: 0;
+    line-height: 12px; }
+  .c-game__board .game__generation {
+    color: #7B154D;
+    margin: 0;
+    margin-top: 5px;
+    border-top: 1px solid white;
+    padding: 5px;
+    padding-top: 10px;
+    display: block;
+    background: #E5ABCB;
+    font-size: 1.2em;
+    width: inherit; }
+
+.frame {
+  border-radius: 5px;
+  display: inline-block;
+  background: grey;
+  background: linear-gradient(to bottom right, grey, lightgrey, #25383c);
+  margin: 0 auto;
+  width: auto;
+  position: relative;
+  border: 1px solid #7B154D; }
+  @media (min-width: 50em) {
+    .frame {
+      border: 0;
+      padding: 30px 15px 10px 15px;
+      box-shadow: 30px -20px 80px 20px #2c3539; }
+      .frame::after {
+        content: '';
+        width: 15px;
+        height: 15px;
+        top: 5px;
+        background: black;
+        border-radius: 50%;
+        border: 2px solid #25383c;
+        position: absolute;
+        margin: 0 auto; } }
+
+.row {
+  list-style: none;
+  margin: 0;
+  padding-left: 0; }
+  .row li {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 1px; }

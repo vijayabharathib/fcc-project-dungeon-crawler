@@ -1,0 +1,36 @@
+.game__control {
+  margin: 10px auto;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  background: #25383c;
+  background: linear-gradient(to right, #2c3539, #25383c, #2c3539);
+  width: inherit; }
+  @media (min-width: 40em) {
+    .game__control {
+      box-shadow: 30px 0 80px 20px #2c3539; } }
+
+.control__list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around; }
+
+.game__toggle {
+  flex-grow: 1;
+  padding: 5px;
+  margin: 10px;
+  font-size: 1.2em;
+  border-radius: 3px;
+  border: 0;
+  box-shadow: 0;
+  outline: 0;
+  color: #7B154D;
+  background-color: #E5ABCB;
+  background: linear-gradient(to bottom, #E5ABCB, #D17AAA); }
+  .game__toggle:hover {
+    background: linear-gradient(to top, #E5ABCB, #D17AAA);
+    cursor: pointer; }
+  @media (min-width: 40em) {
+    .game__toggle {
+      display: inline-block; } }
