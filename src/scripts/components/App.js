@@ -1,12 +1,10 @@
 import React from 'react';
-import GameBoard from './GameBoard';
-import GameControl from './GameControls';
+import Map from './Map';
 
 const App = () => {
   return(
-        <GameBoard>
-          <GameControl />
-        </GameBoard>
+        <Map>
+        </Map>
   );
 }
 
