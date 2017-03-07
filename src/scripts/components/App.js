@@ -1,10 +1,10 @@
 import React from 'react';
-import Map from './Map';
+import Maze from './Maze';
 
 const App = () => {
   return(
-        <Map>
-        </Map>
+        <Maze>
+        </Maze>
   );
 }
 

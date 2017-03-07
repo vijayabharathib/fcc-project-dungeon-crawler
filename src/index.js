@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
-import mapReducer from './scripts/reducers/mapReducers';
+import mazeReducer from './scripts/reducers/mazeReducers';
 import App from './scripts/components/App';
+import {createMaze} from './scripts/actions/mazeActions';
 import './styles/css/index.css';
 
-let store = createStore(mapReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+let store = createStore(mazeReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 // const calcRow=()=>{
 //   let row;
 //   if(window.innerWidth<window.innerHeight){ //portrait
@@ -25,7 +26,7 @@ let store = createStore(mapReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window
 //   col=col > 70 ? 64 : col; //limit max col.
 //   return col;
 // }
-// store.dispatch(createBoard(calcRow(),calcCol()));
+store.dispatch(createMaze());
 // store.dispatch(randomizeBoard());
 // let intervalID=setInterval( () =>{
 //   store.dispatch(nextGeneration());
