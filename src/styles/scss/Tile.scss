@@ -1,8 +1,25 @@
 @import  'settings';
-.c-tile--wall {
-  background: $color-secondary-2-3; }
 
-.c-cell--dead {
-  background: $color-secondary-2-1;
-  background: transparentize($color-white,.8);
+.c-tile--wall {
+  background: $color-secondary-2-3;
+}
+
+.c-tile--player {
+  background: green;
+  &:after {
+    content: '';
+    height: 12px;
+    width: 12px;
+    border: 0;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    margin-top: -8px;
+    margin-left: -8px;
+    border: 2px solid green;
+  }
+}
+
+.c-tile--guard {
+  background: red;
 }

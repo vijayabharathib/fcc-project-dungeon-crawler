@@ -1,6 +1,19 @@
 .c-tile--wall {
   background: #992E69; }
 
-.c-cell--dead {
-  background: #E5ABCB;
-  background: rgba(255, 255, 255, 0.2); }
+.c-tile--player {
+  background: green; }
+  .c-tile--player:after {
+    content: '';
+    height: 12px;
+    width: 12px;
+    border: 0;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    margin-top: -8px;
+    margin-left: -8px;
+    border: 2px solid green; }
+
+.c-tile--guard {
+  background: red; }

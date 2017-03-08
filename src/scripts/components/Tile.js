@@ -2,12 +2,29 @@ import React, {} from 'react';
 import '../../styles/css/Tile.css';
 
 let Tile = (props) => {
-    let class_name="c-tile--"+(props.type==='WALL' ? "wall" : "space");
-
-    return (
-      <td className={class_name}>
-      </td>
-    );
+  let class_name="c-tile--";
+  switch (props.type) {
+    case 'WALL':
+      class_name+="wall";
+      break;
+    case 'SPACE':
+      class_name+="space";
+      break;
+    case 'PLAYER':
+      class_name+="player";
+      break;
+    case 'GUARD':
+      class_name+="guard";
+      break;
+    default:
+      class_name+="nobody";
+      break;
+  }
+  
+  return (
+    <td className={class_name}>
+    </td>
+  );
 }
 
 

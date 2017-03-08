@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import mazeReducer from './scripts/reducers/mazeReducers';
 import App from './scripts/components/App';
-import {createMaze} from './scripts/actions/mazeActions';
+import {createMaze,movePlayer} from './scripts/actions/mazeActions';
 import './styles/css/index.css';
 
 let store = createStore(mazeReducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
@@ -39,3 +39,14 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+function keyHandlers(){
+  document.onkeydown=function(event){
+    store.dispatch(movePlayer(event.key));
+    event.preventDefault();
+  };
+}
+
+document.addEventListener("DOMContentLoaded",function(e){
+  keyHandlers();
+});
