@@ -17,3 +17,9 @@
 
 .c-tile--guard {
   background: red; }
+
+.c-tile--weapon {
+  background: orange; }
+
+.c-tile--food {
+  background: green; }

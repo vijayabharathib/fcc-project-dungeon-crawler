@@ -16,11 +16,17 @@ let Tile = (props) => {
     case 'GUARD':
       class_name+="guard";
       break;
+    case 'WEAPON':
+      class_name+="weapon";
+      break;
+    case 'FOOD':
+      class_name+="food";
+      break;
     default:
       class_name+="nobody";
       break;
   }
-  
+
   return (
     <td className={class_name}>
     </td>
