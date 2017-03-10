@@ -12,6 +12,7 @@ const _createNewMaze=(state)=>{
     maze.push(rows);
     rows=undefined;
   }
+  maze=_createRooms(maze);
   maze[12][5]={type: 'PLAYER'};
   let playerPosition={x: 12, y: 5};
   maze[5][15]={type: 'GUARD'};
@@ -19,6 +20,41 @@ const _createNewMaze=(state)=>{
     maze,
     playerPosition
   };
+}
+
+const _createRooms = (maze) => {
+  let path=[
+    [0,15,27,15],
+    [16,0,16,15],
+    [0,33,27,33],
+    [10,15,10,33],
+    [17,33,17,49],
+    [27,0,27,49],
+    [40,0,40,49],
+    [40,24,49,24],
+    [27,12,40,12],
+    [27,37,40,37]
+  ];
+  let open=0;
+  path.forEach((line)=>{
+    let door
+    for(let a=line[0];a<=line[2];a++){
+      for(let b=line[1];b<=line[3];b++){
+        maze[a][b]={type:'WALL'};
+      }
+    }
+
+    if(line[0]===line[2]){
+      door=(Math.floor((line[3]-line[1])/2)+line[1]);
+      maze[line[0]][door]={type: 'SPACE'}
+    } else {
+      door=(Math.floor((line[2]-line[0])/2)+line[0]);
+      maze[door][line[1]]={type: 'SPACE'}
+    }
+
+  });
+
+  return maze;
 }
 
 const _movePlayer = (state,key) => {
