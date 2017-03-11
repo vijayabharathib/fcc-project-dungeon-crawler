@@ -1,0 +1,8 @@
+.player_status {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0; }
+  .player_status li {
+    display: inline-block; }

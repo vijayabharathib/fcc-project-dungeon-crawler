@@ -1,3 +1,8 @@
+let weapons={
+'SPEAR': {name: 'Spear',force: 20},
+'SWORD': {name: 'Sword',force: 30},
+'HAMMER': {name: 'Hammer',force: 10}
+}
 
 const _createNewMaze=(state)=>{
   let maze=[];
@@ -14,13 +19,17 @@ const _createNewMaze=(state)=>{
   }
   maze=_createRooms(maze);
   maze[12][5]={type: 'PLAYER'};
+  let player={
+    position: {x: 12, y: 5},
+    health: 60,
+    weapon: weapons.HAMMER
+  }
   let playerPosition={x: 12, y: 5};
-  let playerHealth=60;
-  maze[5][15]={type: 'GUARD'};
+  let playerWeapon
   return {
     maze,
     playerPosition,
-    playerHealth
+    player
   };
 }
 
@@ -53,18 +62,34 @@ const _createRooms = (maze) => {
       maze[door][line[1]]={type: 'SPACE'}
     }
   });
-  maze[29][40]={type: 'WEAPON'}
+  maze[29][40]={type: 'WEAPON',name: 'Spear',force: 20}
   let food=[
     [7,9],
     [3,23],
     [13,43],
     [22,6],
     [18,26],
-    [23,40]
+    [23,40],
+    [29,44],
+    [29,30],
+    [33,4],
+    [46,7],
+    [48,43]
   ];
   food.forEach((pie)=>{
     maze[pie[0]][pie[1]]={type: 'FOOD'};
   });
+  let guards = [
+    [5,13],
+    [43,13],
+    [26,18],
+    [44,29],
+    [30,29]
+  ];
+  guards.forEach((guard)=>{
+    maze[guard[0]][guard[1]]={type: 'GUARD',health: 60};
+  });
+  maze[2][47]={type: 'DOOR'};
   return maze;
 }
 
@@ -93,7 +118,8 @@ const _movePlayer = (state,key) => {
       break;
   }
   if(newPosition.x>0 && newPosition.y>0 && newPosition.x<50 && newPosition.y<50){
-    let nextType=state.maze[newPosition.x][newPosition.y].type;
+    let next=state.maze[newPosition.x][newPosition.y];
+    let nextType=next.type;
     if(nextType==='SPACE' || nextType==='FOOD' || nextType==='WEAPON'){
       state.maze[newPosition.x][newPosition.y].type='PLAYER';
       state.maze[x][y].type='SPACE';
@@ -103,18 +129,14 @@ const _movePlayer = (state,key) => {
 
     switch(nextType){
       case 'FOOD':
-        state.playerHealth+=20;
-        console.log(state.playerHealth);
+        state.player.health+=20;
         break;
       case 'WEAPON':
         break;
+      default:
+        break;
     }
-    // if(state.maze[newPosition.x][newPosition.y].type==='SPACE'){
-    //   state.maze[newPosition.x][newPosition.y].type='PLAYER';
-    //   state.maze[x][y].type='SPACE';
-    //   state.playerPosition.x=newPosition.x;
-    //   state.playerPosition.y=newPosition.y;
-    // }
+
   }
   return state;
 }
@@ -123,7 +145,7 @@ const mazeReducer=(state={},action)=>{
   let newState=Object.assign({},{
     maze: state.maze,
     playerPosition: state.playerPosition,
-    playerHealth: state.playerHealth
+    player: state.player
   });
   switch (action.type) {
     case 'CREATE_MAZE':

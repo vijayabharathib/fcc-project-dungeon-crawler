@@ -1,5 +1,6 @@
 import React from 'react';
 import Tile from './Tile';
+import PlayerStatus from './Player';
 import {connect} from 'react-redux';
 import '../../styles/css/GameBoard.css';
 
@@ -19,12 +20,13 @@ let Maze =({state,control,dispatch})=> {
 
     return(
       <div className="c-app__container">
+        <PlayerStatus health={state.player.health} />
+        {control}
           <table className="frame">
             <tbody className="c-game__board">
                 {maze}
             </tbody>
           </table>
-        {control}
       </div>
     )
 
