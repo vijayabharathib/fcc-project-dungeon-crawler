@@ -20,7 +20,9 @@ let Maze =({state,control,dispatch})=> {
 
     return(
       <div className="c-app__container">
-        <PlayerStatus health={state.player.health} />
+        <PlayerStatus
+          player={state.player}
+        />
         {control}
           <table className="frame">
             <tbody className="c-game__board">

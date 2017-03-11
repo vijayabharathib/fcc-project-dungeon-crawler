@@ -22,7 +22,9 @@ const _createNewMaze=(state)=>{
   let player={
     position: {x: 12, y: 5},
     health: 60,
-    weapon: weapons.HAMMER
+    weapon: weapons.HAMMER,
+    level: 1,
+    xp: 60
   }
   let playerPosition={x: 12, y: 5};
   let playerWeapon
@@ -62,7 +64,7 @@ const _createRooms = (maze) => {
       maze[door][line[1]]={type: 'SPACE'}
     }
   });
-  maze[29][40]={type: 'WEAPON',name: 'Spear',force: 20}
+  maze[29][40]={type: 'WEAPON',weapon: weapons.SPEAR }
   let food=[
     [7,9],
     [3,23],
@@ -120,7 +122,11 @@ const _movePlayer = (state,key) => {
   if(newPosition.x>0 && newPosition.y>0 && newPosition.x<50 && newPosition.y<50){
     let next=state.maze[newPosition.x][newPosition.y];
     let nextType=next.type;
-    if(nextType==='SPACE' || nextType==='FOOD' || nextType==='WEAPON'){
+    if(nextType==='SPACE' ||
+      nextType==='FOOD' ||
+      nextType==='WEAPON' ||
+      (nextType==='GUARD' && next.health<=0)
+      ){
       state.maze[newPosition.x][newPosition.y].type='PLAYER';
       state.maze[x][y].type='SPACE';
       state.playerPosition.x=newPosition.x;
@@ -132,6 +138,13 @@ const _movePlayer = (state,key) => {
         state.player.health+=20;
         break;
       case 'WEAPON':
+        state.player.weapon=next.weapon;
+        break;
+      case 'GUARD':
+        if(next.health>0){          
+          state.player.health-=20;
+          next.health-=20;
+        }
         break;
       default:
         break;
