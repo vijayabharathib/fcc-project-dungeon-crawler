@@ -1,7 +1,7 @@
-let weapons={
-'SPEAR': {name: 'Spear',force: 20},
-'SWORD': {name: 'Sword',force: 30},
-'HAMMER': {name: 'Hammer',force: 10}
+export const weapons={
+  'HAMMER': {name: 'Hammer',force: 10},
+  'SPEAR': {name: 'Spear',force: 20},
+  'SWORD': {name: 'Sword',force: 30}
 }
 
 const _createNewMaze=(state)=>{
@@ -89,15 +89,15 @@ const _createRooms = (maze) => {
     [30,29]
   ];
   guards.forEach((guard)=>{
-    maze[guard[0]][guard[1]]={type: 'GUARD',health: 60};
+    maze[guard[0]][guard[1]]={type: 'GUARD',health: 30,weapon: weapons.HAMMER};
   });
   maze[2][47]={type: 'DOOR'};
   return maze;
 }
 
 const _movePlayer = (state,key) => {
-  let x=state.playerPosition.x;
-  let y=state.playerPosition.y;
+  let x=state.player.position.x;
+  let y=state.player.position.y;
   let newPosition={x:-1,y:-1}
   switch (key) {
     case "ArrowLeft":
@@ -121,6 +121,7 @@ const _movePlayer = (state,key) => {
   }
   if(newPosition.x>0 && newPosition.y>0 && newPosition.x<50 && newPosition.y<50){
     let next=state.maze[newPosition.x][newPosition.y];
+    let player=state.player;
     let nextType=next.type;
     if(nextType==='SPACE' ||
       nextType==='FOOD' ||
@@ -129,21 +130,22 @@ const _movePlayer = (state,key) => {
       ){
       state.maze[newPosition.x][newPosition.y].type='PLAYER';
       state.maze[x][y].type='SPACE';
-      state.playerPosition.x=newPosition.x;
-      state.playerPosition.y=newPosition.y;
+      player.position.x=newPosition.x;
+      player.position.y=newPosition.y;
     }
 
     switch(nextType){
       case 'FOOD':
-        state.player.health+=20;
+        player.health+=20;
         break;
       case 'WEAPON':
-        state.player.weapon=next.weapon;
+        player.weapon=next.weapon;
         break;
       case 'GUARD':
-        if(next.health>0){          
-          state.player.health-=20;
-          next.health-=20;
+
+        if(next.health>0){
+          player.health-=next.weapon.force;
+          next.health-=player.weapon.force;
         }
         break;
       default:
@@ -157,7 +159,6 @@ const _movePlayer = (state,key) => {
 const mazeReducer=(state={},action)=>{
   let newState=Object.assign({},{
     maze: state.maze,
-    playerPosition: state.playerPosition,
     player: state.player
   });
   switch (action.type) {
