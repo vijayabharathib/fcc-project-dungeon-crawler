@@ -6,33 +6,49 @@ export const weapons={
 
 const _createNewMaze=(state)=>{
   let maze=[];
-  for(let i=0;i<50;i++){
-    let rows=[];
-    for(let j=0;j<50;j++){
-      if(i===0 || j===0 || i===49 || j===49)
-        rows.push({type: 'WALL'})
-      else
-        rows.push({type: 'SPACE'});
-    }
-    maze.push(rows);
-    rows=undefined;
-  }
-  maze=_createRooms(maze);
+  maze=_setupEnvironment();
+  let player=_setupPlayer();
   maze[12][5]={type: 'PLAYER'};
-  let player={
+  return {
+    maze,
+    player
+  };
+}
+
+const _setupEnvironment = () => {
+  let newMaze=_createBoundary();
+  newMaze=_createRooms(newMaze);
+  newMaze=_distributeFood(newMaze);
+  newMaze=_positionGuards(newMaze);
+  newMaze=_openDoor(newMaze);
+  newMaze=_placeWeapon(newMaze);
+  return newMaze;
+}
+
+const _setupPlayer = () => {
+  return ({
     position: {x: 12, y: 5},
     health: 60,
     weapon: weapons.HAMMER,
     level: 1,
     xp: 60
+  });
+}
+
+const _createBoundary = () => {
+  let maze=[];
+  for(let i=0;i<50;i++){
+    let rows=[];
+    for(let j=0;j<50;j++){
+      if(i===0 || j===0 || i===49 || j===49)
+      rows.push({type: 'WALL'})
+      else
+      rows.push({type: 'SPACE'});
+    }
+    maze.push(rows);
+    rows=undefined;
   }
-  let playerPosition={x: 12, y: 5};
-  let playerWeapon
-  return {
-    maze,
-    playerPosition,
-    player
-  };
+  return maze;
 }
 
 const _createRooms = (maze) => {
@@ -64,7 +80,10 @@ const _createRooms = (maze) => {
       maze[door][line[1]]={type: 'SPACE'}
     }
   });
-  maze[29][40]={type: 'WEAPON',weapon: weapons.SPEAR }
+  return maze;
+}
+
+const _distributeFood = (maze) => {
   let food=[
     [7,9],
     [3,23],
@@ -81,6 +100,10 @@ const _createRooms = (maze) => {
   food.forEach((pie)=>{
     maze[pie[0]][pie[1]]={type: 'FOOD'};
   });
+  return maze;
+}
+
+const _positionGuards = (maze) => {
   let guards = [
     [5,13],
     [43,13],
@@ -91,7 +114,16 @@ const _createRooms = (maze) => {
   guards.forEach((guard)=>{
     maze[guard[0]][guard[1]]={type: 'GUARD',health: 30,weapon: weapons.HAMMER};
   });
+  return maze;
+}
+
+const _openDoor = (maze) => {
   maze[2][47]={type: 'DOOR'};
+  return maze;
+}
+
+const _placeWeapon = (maze) => {
+  maze[29][40]={type: 'WEAPON',weapon: weapons.SPEAR };
   return maze;
 }
 
@@ -146,6 +178,9 @@ const _movePlayer = (state,key) => {
         if(next.health>0){
           player.health-=next.weapon.force;
           next.health-=player.weapon.force;
+        } else {
+          player.xp-=10;
+          if (player.xp<=0) player.level+=1;
         }
         break;
       default:

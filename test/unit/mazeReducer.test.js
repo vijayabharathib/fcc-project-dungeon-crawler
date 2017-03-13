@@ -77,7 +77,7 @@ test("UT - mazeReducer - fight the guard until one is defeated", (t)=>{
   let x=state.player.position.x;
   let y=state.player.position.y;
   state.player.weapon=weapons.HAMMER;
-  state.maze[x+1][y]={type: 'GUARD', health: 60}; //set a guard below player
+  state.maze[x+1][y]={type: 'GUARD', health: 60,weapon: weapons.HAMMER}; //set a guard below player
   let previousPlayerHealthLevel=state.player.health;
   let previousGuardHealthLevel=state.maze[x+1][y].health;
 
@@ -97,4 +97,24 @@ test("UT - mazeReducer - fight the guard until one is defeated", (t)=>{
   actual=newState.maze[x+1][y].type;
   expected='PLAYER';
   t.equal(actual,expected,"Player should take guard's place after his defeat");
+});
+
+test("UT - mazeReducer - wins, xp and levels", (t)=>{
+  t.plan(1);
+  let state=mazeReducer({},createMaze());
+  let x=state.player.position.x;
+  let y=state.player.position.y;
+  state.player.weapon=weapons.HAMMER;
+  state.maze[x+1][y]={type: 'GUARD', health: 30, weapon: weapons.HAMMER}; //set a guard below player
+  state.player.xp=10; //bring down so that level will increse after first win
+  let previousPlayerLevel=state.player.level;
+  let newState=mazeReducer(state,movePlayer("ArrowDown")); //move player down to pick up a fight
+  newState=mazeReducer(newState,movePlayer("ArrowDown"));
+  newState=mazeReducer(newState,movePlayer("ArrowDown"));
+  newState=mazeReducer(newState,movePlayer("ArrowDown")); //this move should win
+
+  let expected=previousPlayerLevel+1;
+  let actual=newState.player.level;
+  t.equal(actual,expected,"Player level should increment after xp runs out");
+
 });
