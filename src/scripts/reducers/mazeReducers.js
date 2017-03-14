@@ -3,27 +3,37 @@ export const weapons={
   'SPEAR': {name: 'Spear',force: 20},
   'SWORD': {name: 'Sword',force: 30}
 }
-
-const _createNewMaze=(state)=>{
-  let maze=[];
-  maze=_setupEnvironment();
-  let player=_setupPlayer();
-  maze[12][5]={type: 'PLAYER'};
-  return {
-    maze,
-    player
-  };
-}
-
-const _setupEnvironment = () => {
-  let newMaze=_createBoundary();
-  newMaze=_createRooms(newMaze);
-  newMaze=_distributeFood(newMaze);
-  newMaze=_positionGuards(newMaze);
-  newMaze=_openDoor(newMaze);
-  newMaze=_placeWeapon(newMaze);
-  return newMaze;
-}
+export const game={
+  environment: [
+    [
+      [0,15,27,15],
+      [16,0,16,15],
+      [0,33,27,33],
+      [10,15,10,33],
+      [17,33,17,49],
+      [27,0,27,49],
+      [40,0,40,35],
+      [40,35,40,49],
+      [40,24,49,24],
+      [27,12,40,12],
+      [27,37,40,37]
+    ],
+    [
+      [0,5,17,15],
+      [16,0,16,5],
+      [0,33,17,33],
+      [10,15,10,33],
+      [17,33,17,49],
+      [27,0,27,49],
+      [40,0,40,35],
+      [40,35,40,49],
+      [40,24,49,24],
+      [27,12,40,12],
+      [27,37,40,37]
+    ],
+    []
+  ]
+};
 
 const _setupPlayer = () => {
   return ({
@@ -33,6 +43,18 @@ const _setupPlayer = () => {
     level: 1,
     xp: 60
   });
+}
+
+const _createNewMaze=(state)=>{
+  let maze=[];
+  let dungeon=1;
+  maze=_setupEnvironment(dungeon);
+  let player=_setupPlayer();
+  maze[12][5]={type: 'PLAYER'};
+  return {
+    maze,
+    player
+  };
 }
 
 const _createBoundary = () => {
@@ -51,20 +73,8 @@ const _createBoundary = () => {
   return maze;
 }
 
-const _createRooms = (maze) => {
-  let path=[
-    [0,15,27,15],
-    [16,0,16,15],
-    [0,33,27,33],
-    [10,15,10,33],
-    [17,33,17,49],
-    [27,0,27,49],
-    [40,0,40,35],
-    [40,35,40,49],
-    [40,24,49,24],
-    [27,12,40,12],
-    [27,37,40,37]
-  ];
+const _createRooms = (maze,dungeon) => {
+  let path=game.environment[dungeon-1];
   path.forEach((line)=>{
     let door
     for(let a=line[0];a<=line[2];a++){
@@ -127,30 +137,36 @@ const _placeWeapon = (maze) => {
   return maze;
 }
 
+const _findNewPosition=(position,key) =>{
+  let x,y;
+  switch (key) {
+    case "ArrowLeft":
+      x=position.x;
+      y=position.y-1;
+      break;
+    case "ArrowRight":
+      x=position.x;
+      y=position.y+1;
+      break;
+    case "ArrowDown":
+      x=position.x+1;
+      y=position.y;
+      break;
+    case "ArrowUp":
+      x=position.x-1;
+      y=position.y;
+      break;
+    default:
+    break;
+  }
+  return {x,y};
+}
+
 const _movePlayer = (state,key) => {
   let x=state.player.position.x;
   let y=state.player.position.y;
-  let newPosition={x:-1,y:-1}
-  switch (key) {
-    case "ArrowLeft":
-      newPosition.x=x;
-      newPosition.y=y-1;
-      break;
-    case "ArrowRight":
-      newPosition.x=x;
-      newPosition.y=y+1;
-      break;
-    case "ArrowDown":
-      newPosition.x=x+1;
-      newPosition.y=y;
-      break;
-    case "ArrowUp":
-      newPosition.x=x-1;
-      newPosition.y=y;
-      break;
-    default:
-      break;
-  }
+  // let newPosition={x:-1,y:-1};
+  let newPosition=_findNewPosition(state.player.position,key);
   if(newPosition.x>0 && newPosition.y>0 && newPosition.x<50 && newPosition.y<50){
     let next=state.maze[newPosition.x][newPosition.y];
     let player=state.player;
@@ -174,7 +190,6 @@ const _movePlayer = (state,key) => {
         player.weapon=next.weapon;
         break;
       case 'GUARD':
-
         if(next.health>0){
           player.health-=next.weapon.force;
           next.health-=player.weapon.force;
@@ -182,6 +197,11 @@ const _movePlayer = (state,key) => {
           player.xp-=10;
           if (player.xp<=0) player.level+=1;
         }
+        break;
+      case 'DOOR':
+        console.log("we're at the door");
+        state.maze=_setupEnvironment(2);
+        console.log(state);
         break;
       default:
         break;
@@ -191,6 +211,16 @@ const _movePlayer = (state,key) => {
   return state;
 }
 
+const _setupEnvironment = (dungeon) => {
+  let newMaze=_createBoundary();
+  newMaze=_createRooms(newMaze,dungeon);
+  newMaze=_distributeFood(newMaze);
+  newMaze=_positionGuards(newMaze);
+  newMaze=_openDoor(newMaze);
+  newMaze=_placeWeapon(newMaze);
+  return newMaze;
+}
+
 const mazeReducer=(state={},action)=>{
   let newState=Object.assign({},{
     maze: state.maze,
@@ -198,11 +228,11 @@ const mazeReducer=(state={},action)=>{
   });
   switch (action.type) {
     case 'CREATE_MAZE':
-      return _createNewMaze(newState);
+    return _createNewMaze(newState);
     case 'MOVE_PLAYER':
-      return _movePlayer(newState,action.key);
+    return _movePlayer(newState,action.key);
     default:
-      return newState;
+    return newState;
   }
 }
 
