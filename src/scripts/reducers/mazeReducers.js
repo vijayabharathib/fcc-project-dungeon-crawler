@@ -59,18 +59,25 @@ const _createNewMaze=(state)=>{
 
 const _createBoundary = () => {
   let maze=[];
-  for(let i=0;i<50;i++){
-    let rows=[];
-    for(let j=0;j<50;j++){
-      if(i===0 || j===0 || i===49 || j===49)
-      rows.push({type: 'WALL'})
-      else
-      rows.push({type: 'SPACE'});
-    }
-    maze.push(rows);
-    rows=undefined;
+  for(let row=0;row<50;row++){
+    maze.push(createRows(row));
   }
   return maze;
+}
+
+const createRows=(row)=>{
+  let rows=[];
+  for(let col=0;col<50;col++){
+    if(isBoundary(row,col))
+      rows.push({type: 'WALL'})
+    else
+      rows.push({type: 'SPACE'});
+  }
+  return rows;
+}
+
+const isBoundary=(row,col)=>{
+  return (row===0 || col===0 || row===49 || col===49);
 }
 
 const _createRooms = (maze,dungeon) => {
@@ -137,79 +144,89 @@ const _placeWeapon = (maze) => {
   return maze;
 }
 
-const _findNewPosition=(position,key) =>{
-  let x,y;
-  switch (key) {
-    case "ArrowLeft":
-      x=position.x;
-      y=position.y-1;
-      break;
-    case "ArrowRight":
-      x=position.x;
-      y=position.y+1;
-      break;
-    case "ArrowDown":
-      x=position.x+1;
-      y=position.y;
-      break;
-    case "ArrowUp":
-      x=position.x-1;
-      y=position.y;
-      break;
-    default:
-    break;
-  }
-  return {x,y};
+
+const _movePlayer = (state,direction) => {
+  let nextTile=_fetchNextTile(state,direction);
+  state=_advanceToNextPosition(state,nextTile);
+  state=_processNextPosition(state,nextTile);
+  return state;
 }
-
-const _movePlayer = (state,key) => {
-  let x=state.player.position.x;
-  let y=state.player.position.y;
-  // let newPosition={x:-1,y:-1};
-  let newPosition=_findNewPosition(state.player.position,key);
-  if(newPosition.x>0 && newPosition.y>0 && newPosition.x<50 && newPosition.y<50){
-    let next=state.maze[newPosition.x][newPosition.y];
-    let player=state.player;
-    let nextType=next.type;
-    if(nextType==='SPACE' ||
-      nextType==='FOOD' ||
-      nextType==='WEAPON' ||
-      (nextType==='GUARD' && next.health<=0)
-      ){
-      state.maze[newPosition.x][newPosition.y].type='PLAYER';
+  const _fetchNextTile=(state,direction)=>{
+    let position=_findNextPosition(state.player.position,direction);
+    let next=Object.assign({},state.maze[position.x][position.y]);
+    next.position=position;
+    return next;
+  }
+  const _advanceToNextPosition=(state,next)=>{
+    let x=state.player.position.x;
+    let y=state.player.position.y;
+    if(_isNextMoveAvailable(next)){
+      state.maze[next.position.x][next.position.y].type='PLAYER';
       state.maze[x][y].type='SPACE';
-      player.position.x=newPosition.x;
-      player.position.y=newPosition.y;
+      state.player.position.x=next.position.x;
+      state.player.position.y=next.position.y;
     }
-
-    switch(nextType){
+    return state;
+  }
+  const _processNextPosition=(state,next)=>{
+    console.log(next);
+    switch(next.type){
       case 'FOOD':
-        player.health+=20;
+        state.player.health+=20;
         break;
       case 'WEAPON':
-        player.weapon=next.weapon;
+        state.player.weapon=next.weapon;
         break;
       case 'GUARD':
         if(next.health>0){
-          player.health-=next.weapon.force;
-          next.health-=player.weapon.force;
+          state.player.health-=next.weapon.force;
+          next.health-=state.player.weapon.force;
+          state.maze[next.position.x][next.position.y]=next;
         } else {
-          player.xp-=10;
-          if (player.xp<=0) player.level+=1;
+          state.player.xp-=10;
+          if (state.player.xp<=0) state.player.level+=1;
         }
         break;
       case 'DOOR':
-        console.log("we're at the door");
         state.maze=_setupEnvironment(2);
-        console.log(state);
         break;
       default:
         break;
     }
-
+    return state;
   }
-  return state;
-}
+
+  const _isNextMoveAvailable=(next)=>{
+    return (next.type==='SPACE' ||
+      next.type==='FOOD' ||
+      next.type==='WEAPON' ||
+      (next.type==='GUARD' && next.health<=0));
+  }
+
+  const _findNextPosition=(position,key) =>{
+    let x,y;
+    switch (key) {
+      case "ArrowLeft":
+        x=position.x;
+        y=position.y-1;
+        break;
+      case "ArrowRight":
+        x=position.x;
+        y=position.y+1;
+        break;
+      case "ArrowDown":
+        x=position.x+1;
+        y=position.y;
+        break;
+      case "ArrowUp":
+        x=position.x-1;
+        y=position.y;
+        break;
+      default:
+      break;
+    }
+    return {x,y};
+  }
 
 const _setupEnvironment = (dungeon) => {
   let newMaze=_createBoundary();
@@ -222,18 +239,22 @@ const _setupEnvironment = (dungeon) => {
 }
 
 const mazeReducer=(state={},action)=>{
-  let newState=Object.assign({},{
+  let newState=_cloneState(state);
+  switch (action.type) {
+    case 'CREATE_MAZE':
+      return _createNewMaze(newState);
+    case 'MOVE_PLAYER':
+      return _movePlayer(newState,action.key);
+    default:
+      return newState;
+  }
+}
+
+const _cloneState=(state) =>{
+  return Object.assign({},{
     maze: state.maze,
     player: state.player
   });
-  switch (action.type) {
-    case 'CREATE_MAZE':
-    return _createNewMaze(newState);
-    case 'MOVE_PLAYER':
-    return _movePlayer(newState,action.key);
-    default:
-    return newState;
-  }
 }
 
 export default mazeReducer;
