@@ -73,7 +73,7 @@ export const createNewMaze=(state)=>{
   let dungeon=1;
   maze=setupEnvironment(dungeon);
   let player=_setupPlayer();
-  maze[12][5]={type: 'PLAYER'};
+  maze[12][45]={type: 'PLAYER'};
   return {
     maze,
     player
@@ -82,7 +82,7 @@ export const createNewMaze=(state)=>{
 
 const _setupPlayer = () => {
   return ({
-    position: {x: 12, y: 5},
+    position: {x: 12, y: 45},
     health: 60,
     weapon: weapons.HAMMER,
     level: 1,
