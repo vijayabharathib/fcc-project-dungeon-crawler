@@ -12,6 +12,30 @@ export const movePlayer = (state,direction) => {
     next.position=position;
     return next;
   }
+    const _findNextPosition=(position,direction) =>{
+      let x,y;
+      switch (direction) {
+        case "ArrowLeft":
+        x=position.x;
+        y=position.y-1;
+        break;
+        case "ArrowRight":
+        x=position.x;
+        y=position.y+1;
+        break;
+        case "ArrowDown":
+        x=position.x+1;
+        y=position.y;
+        break;
+        case "ArrowUp":
+        x=position.x-1;
+        y=position.y;
+        break;
+        default:
+        break;
+      }
+      return {x,y};
+    }
   const _advanceToNextPosition=(state,next)=>{
     let x=state.player.position.x;
     let y=state.player.position.y;
@@ -23,6 +47,12 @@ export const movePlayer = (state,direction) => {
     }
     return state;
   }
+    const _isNextMoveAvailable=(next)=>{
+      return (next.type==='SPACE' ||
+      next.type==='FOOD' ||
+      next.type==='WEAPON' ||
+      (next.type==='GUARD' && next.health<=0));
+    }
   const _processNextPosition=(state,next)=>{
     switch(next.type){
       case 'FOOD':
@@ -32,14 +62,7 @@ export const movePlayer = (state,direction) => {
         state.player.weapon=next.weapon;
         break;
       case 'GUARD':
-        if(next.health>0){
-          state.player.health-=next.weapon.force;
-          next.health-=state.player.weapon.force;
-          state.maze[next.position.x][next.position.y]=next;
-        } else {
-          state.player.xp-=10;
-          if (state.player.xp<=0) state.player.level+=1;
-        }
+        state=_fight(state,next);
         break;
       case 'DOOR':
         state.maze=setupEnvironment(2);
@@ -50,34 +73,18 @@ export const movePlayer = (state,direction) => {
     return state;
   }
 
-  const _isNextMoveAvailable=(next)=>{
-    return (next.type==='SPACE' ||
-      next.type==='FOOD' ||
-      next.type==='WEAPON' ||
-      (next.type==='GUARD' && next.health<=0));
-  }
-
-  const _findNextPosition=(position,direction) =>{
-    let x,y;
-    switch (direction) {
-      case "ArrowLeft":
-        x=position.x;
-        y=position.y-1;
-        break;
-      case "ArrowRight":
-        x=position.x;
-        y=position.y+1;
-        break;
-      case "ArrowDown":
-        x=position.x+1;
-        y=position.y;
-        break;
-      case "ArrowUp":
-        x=position.x-1;
-        y=position.y;
-        break;
-      default:
-      break;
+    const _fight=(state,guard) => {
+      if(isGuardAlive(guard)){
+        state.player.health-=guard.weapon.force;
+        guard.health-=state.player.weapon.force;
+        state.maze[guard.position.x][guard.position.y]=guard;
+      } else {
+        state.player.xp-=10;
+        if (state.player.xp<=0) state.player.level+=1;
+      }
+      return state;
     }
-    return {x,y};
-  }
+
+      const isGuardAlive=(guard)=>{
+        return (guard.health>0);
+      }
