@@ -1,70 +1,72 @@
+import {game} from './DungeonData';
+
 export const weapons={
   'HAMMER': {name: 'Hammer',force: 10},
   'SPEAR': {name: 'Spear',force: 20},
   'SWORD': {name: 'Sword',force: 30}
 }
-
-export const game={
-  environment: [
-    [
-      [0,15,27,15],
-      [16,0,16,15],
-      [0,33,27,33],
-      [10,15,10,33],
-      [17,33,17,49],
-      [27,0,27,49],
-      [40,0,40,35],
-      [40,35,40,49],
-      [40,24,49,24],
-      [27,12,40,12],
-      [27,37,40,37]
-    ],
-    [
-      [0,5,17,15],
-      [16,0,16,5],
-      [0,33,17,33],
-      [10,15,10,33],
-      [17,33,17,49],
-      [27,0,27,49],
-      [40,0,40,35],
-      [40,35,40,49],
-      [40,24,49,24],
-      [27,12,40,12],
-      [27,37,40,37]
-    ],
-    []
-  ],
-  food:
-  [
-    [
-      [7,9],
-      [3,23],
-      [13,43],
-      [22,6],
-      [18,26],
-      [23,40],
-      [29,44],
-      [29,30],
-      [33,4],
-      [46,7],
-      [48,43]
-    ],
-    [
-      [7,3],
-      [3,23],
-      [13,43],
-      [22,6],
-      [18,26],
-      [23,40],
-      [29,44],
-      [29,30],
-      [33,4],
-      [46,7],
-      [48,43]
-    ]
-  ]
-
-};
+//
+// export const game={
+//   environment: [
+//     [
+//       [0,15,27,15],
+//       [16,0,16,15],
+//       [0,33,27,33],
+//       [10,15,10,33],
+//       [17,33,17,49],
+//       [27,0,27,49],
+//       [40,0,40,35],
+//       [40,35,40,49],
+//       [40,24,49,24],
+//       [27,12,40,12],
+//       [27,37,40,37]
+//     ],
+//     [
+//       [0,5,17,15],
+//       [16,0,16,5],
+//       [0,33,17,33],
+//       [10,15,10,33],
+//       [17,33,17,49],
+//       [27,0,27,49],
+//       [40,0,40,35],
+//       [40,35,40,49],
+//       [40,24,49,24],
+//       [27,12,40,12],
+//       [27,37,40,37]
+//     ],
+//     []
+//   ],
+//   food:
+//   [
+//     [
+//       [7,9],
+//       [3,23],
+//       [13,43],
+//       [22,6],
+//       [18,26],
+//       [23,40],
+//       [29,44],
+//       [29,30],
+//       [33,4],
+//       [46,7],
+//       [48,43]
+//     ],
+//     [
+//       [7,3],
+//       [3,23],
+//       [13,43],
+//       [22,6],
+//       [18,26],
+//       [23,40],
+//       [29,44],
+//       [29,30],
+//       [33,4],
+//       [46,7],
+//       [48,43]
+//     ]
+//   ]
+//
+// };
 
 export const createNewMaze=(state)=>{
   let maze=[];
@@ -92,7 +94,7 @@ export const setupEnvironment = (dungeon) => {
   let newMaze=_createBoundary();
   newMaze=_createRooms(newMaze,dungeon);
   newMaze=_distributeFood(newMaze,dungeon);
-  newMaze=_positionGuards(newMaze);
+  newMaze=_positionGuards(newMaze,dungeon);
   newMaze=_openDoor(newMaze);
   newMaze=_placeWeapon(newMaze);
   return newMaze;
@@ -149,14 +151,8 @@ const _distributeFood = (maze,dungeon) => {
   return maze;
 }
 
-const _positionGuards = (maze) => {
-  let guards = [
-    [5,13],
-    [43,13],
-    [26,18],
-    [44,29],
-    [30,29]
-  ];
+const _positionGuards = (maze,dungeon) => {
+  let guards = game.guards[dungeon-1];
   guards.forEach((guard)=>{
     maze[guard[0]][guard[1]]={type: 'GUARD',health: 30,weapon: weapons.HAMMER};
   });

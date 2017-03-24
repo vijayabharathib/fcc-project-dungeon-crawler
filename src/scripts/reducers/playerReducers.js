@@ -65,7 +65,7 @@ export const movePlayer = (state,direction) => {
         state=_fight(state,next);
         break;
       case 'DOOR':
-        state.maze=setupEnvironment(2);
+        state.maze=setupEnvironment(3);
         break;
       default:
         break;
