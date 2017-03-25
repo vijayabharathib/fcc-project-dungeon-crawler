@@ -4,7 +4,7 @@ import {
   movePlayer
 } from '../../src/scripts/actions/mazeActions';
 import reducer from '../../src/scripts/reducers/combineReducer';
-import {weapons} from '../../src/scripts/reducers/mazeReducers';
+import {weapons} from '../../src/scripts/reducers/DungeonData';
 
 
 test("UT - mazeReducer - move Player right", (t)=>{

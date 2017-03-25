@@ -16,7 +16,8 @@ const reducer=(state={},action)=>{
 const _cloneState=(state) =>{
   return Object.assign({},{
     maze: state.maze,
-    player: state.player
+    player: state.player,
+    dungeon: state.dungeon
   });
 }
 
