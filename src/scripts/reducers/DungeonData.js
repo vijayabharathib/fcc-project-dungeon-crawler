@@ -1,4 +1,5 @@
 export const weapons={
+  'NONE': {name: 'None',force: 5},
   'HAMMER': {name: 'Hammer',force: 10},
   'SPEAR': {name: 'Spear',force: 20},
   'SWORD': {name: 'Sword',force: 30}
@@ -45,14 +46,16 @@ export const game={
       [7,42,42,42],
       [42,7,42,42],
       [7,7,42,7],
+
       [14,14,14,35],
       [14,35,35,35],
       [35,14,35,35],
       [14,14,35,14],
-      [20,20,20,30],
-      [20,30,30,30],
-      [30,20,30,30],
-      [20,20,30,20],
+
+      [19,19,19,30],
+      [19,30,30,30],
+      [30,19,30,30],
+      [19,19,30,19],
     ]
   ],
   food: [
@@ -122,5 +125,10 @@ export const game={
     [2,47],
     [2,47],
     []
+  ],
+  weapon: [
+    weapons.HAMMER,
+    weapons.SPEAR,
+    weapons.SWORD
   ]
 };

@@ -1,7 +1,5 @@
 import {game,weapons} from './DungeonData';
 
-
-
 export const createNewMaze=(state)=>{
   let maze=[];
   let dungeon=1;
@@ -19,9 +17,9 @@ const _setupPlayer = () => {
   return ({
     position: {x: 12, y: 45},
     health: 60,
-    weapon: weapons.HAMMER,
+    weapon: weapons.NONE,
     level: 1,
-    xp: 60
+    xp: 40
   });
 }
 
@@ -31,7 +29,7 @@ export const setupEnvironment = (dungeon) => {
   newMaze=_distributeFood(newMaze,dungeon);
   newMaze=_positionGuards(newMaze,dungeon);
   newMaze=_openDoor(newMaze,dungeon);
-  newMaze=_placeWeapon(newMaze);
+  newMaze=_placeWeapon(newMaze,dungeon);
   return newMaze;
 }
 
@@ -103,7 +101,7 @@ const _openDoor = (maze,dungeon) => {
   return maze;
 }
 
-const _placeWeapon = (maze) => {
-  maze[29][40]={type: 'WEAPON',weapon: weapons.SPEAR };
+const _placeWeapon = (maze,dungeon) => {
+  maze[29][40]={type: 'WEAPON',weapon: game.weapon[dungeon-1] };
   return maze;
 }

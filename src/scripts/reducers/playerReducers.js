@@ -13,26 +13,27 @@ export const movePlayer = (state,direction) => {
     return next;
   }
     const _findNextPosition=(position,direction) =>{
-      let x,y;
+      let x=position.x;
+      let y=position.y;
       switch (direction) {
         case "ArrowLeft":
-        x=position.x;
-        y=position.y-1;
-        break;
+          x=position.x;
+          y=position.y-1;
+          break;
         case "ArrowRight":
-        x=position.x;
-        y=position.y+1;
-        break;
+          x=position.x;
+          y=position.y+1;
+          break;
         case "ArrowDown":
-        x=position.x+1;
-        y=position.y;
-        break;
+          x=position.x+1;
+          y=position.y;
+          break;
         case "ArrowUp":
-        x=position.x-1;
-        y=position.y;
-        break;
+          x=position.x-1;
+          y=position.y;
+          break;
         default:
-        break;
+          break;
       }
       return {x,y};
     }
@@ -76,13 +77,17 @@ export const movePlayer = (state,direction) => {
   }
 
     const _fight=(state,guard) => {
+      let player=state.player;
       if(isGuardAlive(guard)){
-        state.player.health-=guard.weapon.force;
-        guard.health-=state.player.weapon.force;
+        player.health-=guard.weapon.force;
+        guard.health-=(player.weapon.force * (1+(player.level/2)));
         state.maze[guard.position.x][guard.position.y]=guard;
       } else {
-        state.player.xp-=10;
-        if (state.player.xp<=0) state.player.level+=1;
+        player.xp-=(10*(1+(player.level/2)));
+        if (player.xp<=0) {
+          player.level+=1;
+          player.xp=player.level*30;
+        }
       }
       return state;
     }
