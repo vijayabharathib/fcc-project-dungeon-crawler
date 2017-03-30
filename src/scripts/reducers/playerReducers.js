@@ -67,8 +67,8 @@ export const movePlayer = (state,direction) => {
         break;
       case 'DOOR':
         state.dungeon+=1;
-        console.log("door" + state.dungeon);
         state.maze=setupEnvironment(state.dungeon);
+        state=_positionPlayer(state);
         break;
       default:
         break;
@@ -76,22 +76,35 @@ export const movePlayer = (state,direction) => {
     return state;
   }
 
+    const _positionPlayer = (state) => {
+      let x=12;
+      let y=45;
+      state.maze[x][y]={type: 'PLAYER'};
+      state.player.position.x=x;
+      state.player.position.y=y;
+      return state;
+    }
+
     const _fight=(state,guard) => {
       let player=state.player;
-      if(isGuardAlive(guard)){
-        player.health-=guard.weapon.force;
+      if(isAlive(guard)){
+        player.health-=(guard.weapon.force * (1+(player.level/2)));
         guard.health-=(player.weapon.force * (1+(player.level/2)));
         state.maze[guard.position.x][guard.position.y]=guard;
       } else {
         player.xp-=(10*(1+(player.level/2)));
         if (player.xp<=0) {
           player.level+=1;
-          player.xp=player.level*30;
+          player.xp=player.level*25;
         }
+      }
+      if(!isAlive(player)){
+        state.result="Lost";
+        player.health=0;
       }
       return state;
     }
 
-      const isGuardAlive=(guard)=>{
-        return (guard.health>0);
+      const isAlive=(samurai)=>{
+        return (samurai.health>0);
       }

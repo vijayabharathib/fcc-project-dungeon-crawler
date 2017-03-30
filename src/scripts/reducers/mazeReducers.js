@@ -4,16 +4,18 @@ export const createNewMaze=(state)=>{
   let maze=[];
   let dungeon=1;
   maze=setupEnvironment(dungeon);
-  let player=_setupPlayer();
-  maze[12][45]={type: 'PLAYER'};
+  let player=_setupPlayer(dungeon);
+  maze[player.position.x][player.position.y]={type: 'PLAYER'};
+  let result="Show on";
   return {
     maze,
     player,
-    dungeon
+    dungeon,
+    result
   };
 }
 
-const _setupPlayer = () => {
+const _setupPlayer = (dungeon) => {
   return ({
     position: {x: 12, y: 45},
     health: 60,

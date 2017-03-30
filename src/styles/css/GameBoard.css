@@ -17,6 +17,10 @@
   border-radius: 5px;
   display: block; }
 
+.frame.Lost,
+.frame.Won {
+  opacity: .3; }
+
 .row {
   margin: 0;
   padding: 0;

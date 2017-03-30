@@ -1,0 +1,25 @@
+@import  'settings';
+
+div[class^="c-result"] {
+  position: absolute;
+  width: 200px;
+  height: 130px;
+  border-radius: 10px;
+  opacity: .9;
+  z-index: 1000;
+  top: 320px;
+  left: 175px;
+  text-align: center;
+}
+
+.c-result--lost {
+  background: #d88;
+}
+
+.c-result--won {
+  background: orange;
+}
+
+.c-result--ongoing {
+  display: none;
+}

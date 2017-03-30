@@ -1,7 +1,9 @@
 import React from 'react';
 import Tile from './Tile';
+import GameResult from './GameResult';
 import PlayerStatus from './Player';
 import {connect} from 'react-redux';
+import {createMaze} from '../actions/mazeActions';
 import '../../styles/css/GameBoard.css';
 
 let Maze =({state,control,dispatch})=> {
@@ -17,14 +19,15 @@ let Maze =({state,control,dispatch})=> {
         {lineOfTiles}
       </tr>);
     });
-
+    let restart=()=>{
+      dispatch(createMaze());
+    }
     return(
       <div className="c-app__container">
-        <PlayerStatus
-          player={state.player}
-        />
+        <GameResult result={state.result} onClick={restart} />
+        <PlayerStatus player={state.player} result={state.result} />
         {control}
-          <table className="frame">
+          <table className={"frame " + state.result}>
             <tbody className="c-game__board">
                 {maze}
             </tbody>

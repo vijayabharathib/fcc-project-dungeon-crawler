@@ -18,4 +18,9 @@
   .status_weapon{
     flex: 5;
   }
+  &.Lost{
+    .status_health {
+      background: #d99;
+    }
+  }
 }

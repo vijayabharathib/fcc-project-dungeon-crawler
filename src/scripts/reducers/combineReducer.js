@@ -17,7 +17,8 @@ const _cloneState=(state) =>{
   return Object.assign({},{
     maze: state.maze,
     player: state.player,
-    dungeon: state.dungeon
+    dungeon: state.dungeon,
+    result: state.result
   });
 }
 
