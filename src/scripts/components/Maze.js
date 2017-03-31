@@ -2,6 +2,7 @@ import React from 'react';
 import Tile from './Tile';
 import GameResult from './GameResult';
 import PlayerStatus from './Player';
+import Legend from './Legend';
 import {connect} from 'react-redux';
 import {createMaze} from '../actions/mazeActions';
 import '../../styles/css/GameBoard.css';
@@ -27,11 +28,12 @@ let Maze =({state,control,dispatch})=> {
         <GameResult result={state.result} onClick={restart} />
         <PlayerStatus player={state.player} result={state.result} />
         {control}
-          <table className={"frame " + state.result}>
-            <tbody className="c-game__board">
-                {maze}
-            </tbody>
-          </table>
+        <table className={"frame " + state.result}>
+          <tbody className="c-game__board">
+              {maze}
+          </tbody>
+        </table>
+        <Legend />
       </div>
     )
 

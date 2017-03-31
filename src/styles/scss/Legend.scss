@@ -1,0 +1,45 @@
+.c-legend {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  li {
+    display: inline-block;
+    flex: 3;
+    border-radius: 3px;
+    margin: 2px;
+
+    i {
+      width: 10px;
+      height: 10px;
+      padding: 5px;
+      line-height: 0;
+      display: inline-block;
+      margin-left: -10px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.c-legend_player i {
+    background: white;
+    border: 2px solid green;
+    border-radius: 50%;
+}
+
+.c-legend_guard i {
+  background: #c11;
+}
+
+.c-legend_weapon i {
+  background: #a0a;
+}
+.c-legend_food i {
+  background: green;
+}
+.c-legend_door i {
+  background: blue;
+}
