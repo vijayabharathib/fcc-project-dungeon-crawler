@@ -29,7 +29,9 @@ let Tile = (props) => {
       class_name+="nobody";
       break;
   }
-
+  if(props.light){
+    class_name+= " light";
+  }
   return (
     <td className={class_name}>
     </td>

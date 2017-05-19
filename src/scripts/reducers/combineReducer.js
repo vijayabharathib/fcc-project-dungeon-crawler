@@ -1,4 +1,4 @@
-import {createNewMaze} from './mazeReducers';
+import {createNewMaze,lightupMaze} from './mazeReducers';
 import {movePlayer} from './playerReducers';
 
 const reducer=(state={},action)=>{
@@ -8,6 +8,8 @@ const reducer=(state={},action)=>{
       return createNewMaze(newState);
     case 'MOVE_PLAYER':
       return movePlayer(newState,action.key);
+    case 'TOGGLE_LIGHT':
+      return lightupMaze(newState);
     default:
       return newState;
   }
@@ -18,7 +20,8 @@ const _cloneState=(state) =>{
     maze: state.maze,
     player: state.player,
     dungeon: state.dungeon,
-    result: state.result
+    result: state.result,
+    light: state.light
   });
 }
 

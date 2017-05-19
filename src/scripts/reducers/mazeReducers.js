@@ -1,5 +1,8 @@
 import {game,weapons} from './DungeonData';
-
+export const lightupMaze=(state)=>{
+  state.light=(state.light==="dark" ? "light":"dark");
+  return state;
+}
 export const createNewMaze=(state)=>{
   let maze=[];
   let dungeon=1;
@@ -7,11 +10,13 @@ export const createNewMaze=(state)=>{
   let player=_setupPlayer(dungeon);
   maze[player.position.x][player.position.y]={type: 'PLAYER'};
   let result="Show on";
+  let light="dark";
   return {
     maze,
     player,
     dungeon,
-    result
+    result,
+    light
   };
 }
 

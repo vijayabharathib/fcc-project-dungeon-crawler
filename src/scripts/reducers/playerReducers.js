@@ -45,6 +45,7 @@ export const movePlayer = (state,direction) => {
       state.maze[x][y].type='SPACE';
       state.player.position.x=next.position.x;
       state.player.position.y=next.position.y;
+      state.maze=_setVisibleArea(state.maze,state.player.position.x,state.player.position.y);
     }
     return state;
   }
@@ -54,6 +55,21 @@ export const movePlayer = (state,direction) => {
       next.type==='WEAPON' ||
       (next.type==='GUARD' && next.health<=0));
     }
+
+    const _setVisibleArea=(maze,playerX,playerY)=>{
+      return maze.map((cols,x)=>{
+        return cols.map((cell,y)=>{
+          if(_isWithinVisinity(x,y,playerX,playerY))
+            cell.light=true;
+          else
+            cell.light=false;
+          return cell;
+        });
+      });
+    }
+      const _isWithinVisinity=(x,y,playerX,playerY)=>{
+        return ((x>(playerX-4)) && (x<(playerX+4)) && (y>(playerY-4)) && (y<(playerY+4)));
+      }
   const _processNextPosition=(state,next)=>{
     switch(next.type){
       case 'FOOD':

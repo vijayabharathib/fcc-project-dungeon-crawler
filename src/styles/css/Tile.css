@@ -29,3 +29,6 @@
 
 .c-tile--nobody {
   background: black; }
+
+.c-game__board.light td[class^="c-tile"]:not(.light) {
+  background: #333; }

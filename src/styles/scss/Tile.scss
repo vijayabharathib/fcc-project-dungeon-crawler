@@ -24,8 +24,9 @@
   background: #c11;
 }
 
+
 .c-tile--weapon {
-  background: #a0a;
+    background: #a0a;
 }
 
 .c-tile--food {
@@ -38,4 +39,8 @@
 
 .c-tile--nobody {
   background: black;
+}
+
+.c-game__board.light td[class^="c-tile"]:not(.light){
+  background: #333;
 }
