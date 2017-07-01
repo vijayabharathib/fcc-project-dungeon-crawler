@@ -25,6 +25,9 @@ let Tile = (props) => {
     case 'DOOR':
       class_name+="door";
       break;
+    case 'BOSS':
+      class_name+="boss";
+      break;
     default:
       class_name+="nobody";
       break;

@@ -53,7 +53,7 @@ export const movePlayer = (state,direction) => {
       return (next.type==='SPACE' ||
       next.type==='FOOD' ||
       next.type==='WEAPON' ||
-      (next.type==='GUARD' && next.health<=0));
+      ((next.type==='GUARD' || next.type=='BOSS') && next.health<=0));
     }
 
     const _setVisibleArea=(maze,playerX,playerY)=>{
@@ -79,6 +79,9 @@ export const movePlayer = (state,direction) => {
         state.player.weapon=next.weapon;
         break;
       case 'GUARD':
+        state=_fight(state,next);
+        break;
+      case 'BOSS':
         state=_fight(state,next);
         break;
       case 'DOOR':
@@ -107,6 +110,8 @@ export const movePlayer = (state,direction) => {
         player.health-=(guard.weapon.force * (1+(player.level/2)));
         guard.health-=(player.weapon.force * (1+(player.level/2)));
         state.maze[guard.position.x][guard.position.y]=guard;
+      } else if(guard.type='BOSS') {
+        state.result="Won";
       } else {
         player.xp-=(10*(1+(player.level/2)));
         if (player.xp<=0) {

@@ -11,7 +11,7 @@ let PlayerStatus = (props) => {
       <li className="status_xp">{`Next level: ${player.xp}xp`}</li>
       <li className="status_level">{`Level: ${player.level}`}</li>
       <li className="toggle_light">
-        <button onClick={props.toggleLight} >Toggle Light</button>        
+        <button onClick={props.toggleLight} >Light</button>        
       </li>
     </ul>
   );

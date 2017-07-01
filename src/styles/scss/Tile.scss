@@ -37,6 +37,22 @@
   background: blue;
 }
 
+.c-tile--boss {
+  background: #c11;
+  &:after {
+    content: '';
+    height: 12px;
+    width: 12px;
+    border: 0;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    margin-top: -8px;
+    margin-left: -8px;
+    border: 2px solid #c11;
+  }
+}
+
 .c-tile--nobody {
   background: black;
 }

@@ -37,6 +37,7 @@ export const setupEnvironment = (dungeon) => {
   newMaze=_positionGuards(newMaze,dungeon);
   newMaze=_openDoor(newMaze,dungeon);
   newMaze=_placeWeapon(newMaze,dungeon);
+  newMaze=_positionBoss(newMaze,dungeon);
   return newMaze;
 }
 
@@ -96,6 +97,16 @@ const _positionGuards = (maze,dungeon) => {
   guards.forEach((guard)=>{
     maze[guard[0]][guard[1]]={type: 'GUARD',health: 30,weapon: weapons.HAMMER};
   });
+  return maze;
+}
+
+const _positionBoss = (maze,dungeon) => {
+  if(game.boss[dungeon-1].length!==0){
+    console.log("boss");
+    let x=game.boss[dungeon-1][0];
+    let y=game.boss[dungeon-1][1];
+    maze[x][y]={ type: 'BOSS',health: 20,weapon: weapons.SWORD };
+  }
   return maze;
 }
 
