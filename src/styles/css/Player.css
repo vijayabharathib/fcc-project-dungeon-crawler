@@ -17,5 +17,17 @@
     flex: 5; }
   .player_status .status_weapon {
     flex: 5; }
+  .player_status .toggle_light {
+    padding: 0; }
+    .player_status .toggle_light button {
+      padding: 5px;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to bottom, #B44E86, #A33D75);
+      border: 0;
+      color: white;
+      cursor: pointer; }
+      .player_status .toggle_light button:hover {
+        background: linear-gradient(to top, #B44E86, #A33D75); }
   .player_status.Lost .status_health {
     background: #d99; }

@@ -6,12 +6,22 @@ let PlayerStatus = (props) => {
 
   return (
     <ul className={"player_status " + props.result }>
-      <li className="status_health">{`Health: ${player.health}`}</li>
-      <li className="status_weapon">{`Weapon: ${player.weapon.name}`}</li>
-      <li className="status_xp">{`Next level: ${player.xp}xp`}</li>
-      <li className="status_level">{`Level: ${player.level}`}</li>
+      <li className="status_health">
+        <svg className='status icon'><use xlinkHref="#icon_health_kit"/></svg>
+        <span>{`${player.health}`}</span>
+      </li>
+      <li className="status_weapon">
+        <svg className='status icon'><use xlinkHref="#icon_weapon"/></svg>
+        <span>{`${player.weapon.name}`}</span></li>
+      <li className="status_xp">
+        <svg className='status icon'><use xlinkHref="#icon_next"/></svg>
+        <span>{`${player.xp}xp`}</span></li>
+      <li className="status_level">
+        <svg className='status icon'><use xlinkHref="#icon_level"/></svg>
+        <span>{`${player.level}`}</span>
+      </li>
       <li className="toggle_light">
-        <button onClick={props.toggleLight} >Light</button>        
+        <svg onClick={props.toggleLight} className='status icon'><use xlinkHref="#icon_light"/></svg>
       </li>
     </ul>
   );

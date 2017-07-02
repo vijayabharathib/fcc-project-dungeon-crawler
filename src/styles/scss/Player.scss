@@ -20,6 +20,21 @@
   .status_weapon{
     flex: 5;
   }
+  .toggle_light {
+    padding: 0;
+    button {
+      padding: 5px;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to bottom,#B44E86,#A33D75);
+      border: 0;
+      color: white;
+      cursor: pointer;
+      &:hover {
+        background: linear-gradient(to top,#B44E86,#A33D75);
+      }
+    }
+  }
   &.Lost{
     .status_health {
       background: #d99;

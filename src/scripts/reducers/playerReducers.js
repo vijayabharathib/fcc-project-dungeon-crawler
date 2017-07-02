@@ -110,7 +110,7 @@ export const movePlayer = (state,direction) => {
         player.health-=(guard.weapon.force * (1+(player.level/2)));
         guard.health-=(player.weapon.force * (1+(player.level/2)));
         state.maze[guard.position.x][guard.position.y]=guard;
-      } else if(guard.type='BOSS') {
+      } else if(guard.type==='BOSS') {
         state.result="Won";
       } else {
         player.xp-=(10*(1+(player.level/2)));
