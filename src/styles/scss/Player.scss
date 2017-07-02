@@ -1,43 +1,55 @@
-.player_status {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-  margin: 0;
-  margin-top: 5px;
+ .player_status {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    max-width: 500px;
   li {
-    display: inline-block;
-    flex: 3;
-    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    flex: 4;
     border-radius: 3px;
     border: 1px solid purple;
     margin: 2px;
+    svg {
+      flex: 2;
+      fill: #992E69;
+    }
+    span {
+      flex: 3;
+      display: inline-block;
+    }
   }
-  .status_xp{
-    flex: 5;
-  }
+
   .status_weapon{
     flex: 5;
   }
-  .toggle_light {
-    padding: 0;
-    button {
-      padding: 5px;
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(to bottom,#B44E86,#A33D75);
-      border: 0;
-      color: white;
-      cursor: pointer;
-      &:hover {
-        background: linear-gradient(to top,#B44E86,#A33D75);
-      }
+    .toggle_light {
+      flex: 2;
     }
-  }
   &.Lost{
     .status_health {
       background: #d99;
     }
+  }
+
+ }
+
+.status {
+  height: 100%;
+  padding: 2px;
+  background: #992E69;
+  &.icon {
+  width: 24px  ;
+  height: 24px;
+  fill: white;
+  }
+  .toggle_light & {
+    width: 100%;
   }
 }

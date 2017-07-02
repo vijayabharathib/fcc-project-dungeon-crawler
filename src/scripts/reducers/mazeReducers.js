@@ -105,7 +105,7 @@ const _positionBoss = (maze,dungeon) => {
     console.log("boss");
     let x=game.boss[dungeon-1][0];
     let y=game.boss[dungeon-1][1];
-    maze[x][y]={ type: 'BOSS',health: 20,weapon: weapons.SWORD };
+    maze[x][y]={ type: 'BOSS',health: 200,weapon: weapons.SWORD };
   }
   return maze;
 }
