@@ -22,6 +22,7 @@ let Maze =({state,control,dispatch})=> {
     });
     let restart=()=>{
       dispatch(createMaze());
+      dispatch(toggleLight());
     }
     let shedLight=()=>{
       dispatch(toggleLight());
@@ -29,7 +30,7 @@ let Maze =({state,control,dispatch})=> {
     return(
       <div className="c-app__container">
         <GameResult result={state.result} onClick={restart} />
-        <PlayerStatus player={state.player} result={state.result} toggleLight={shedLight}/>
+        <PlayerStatus player={state.player} result={state.result} toggleLight={shedLight} light={state.light}/>
         {control}
         <table className={"frame " + state.result}>
           <tbody className={"c-game__board " + state.light} >

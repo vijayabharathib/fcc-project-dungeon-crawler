@@ -51,6 +51,11 @@
     margin-left: -8px;
     border: 2px solid #c11;
   }
+  &:not(.light) {
+    &:after {
+      display: none;
+    }
+  }
 }
 
 .c-tile--nobody {

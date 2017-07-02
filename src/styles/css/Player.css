@@ -38,4 +38,17 @@
     height: 24px;
     fill: white; }
   .toggle_light .status {
-    width: 100%; }
+    width: 100%;
+    cursor: pointer; }
+
+.toggle_light.dark .status {
+  fill: white; }
+
+.toggle_light.dark:hover .status {
+  fill: black; }
+
+.toggle_light.light .status {
+  fill: black; }
+
+.toggle_light.light:hover .status {
+  fill: white; }

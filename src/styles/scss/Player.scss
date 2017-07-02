@@ -51,5 +51,24 @@
   }
   .toggle_light & {
     width: 100%;
+    cursor: pointer;
+  }
+}
+
+.toggle_light.dark {
+  .status {
+    fill: white;
+  }
+  &:hover .status {
+    fill: black;
+  }
+}
+
+.toggle_light.light {
+  .status {
+    fill: black;
+  }
+  &:hover .status {
+    fill: white;
   }
 }
