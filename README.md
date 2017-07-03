@@ -4,12 +4,13 @@ The project is hosted on github pages: https://vijayabharathib.github.io/fcc-pro
 
 This project is part of the free code camp 'data visualization certificate'. Uses the following development workflow
 
-- [ ] Use react for view (create-react-app)
-- [ ] Use redux for state management
-- [ ] Use sass for styling
-- [ ] Use tape, react-test-utils, jsdom for testing
-- [ ] automatic Unit and integration tests in dev (npm-watch)
-- [ ] watch and process sass (npm-watch)
+- [x] Use react for view (create-react-app)
+- [x] Use redux for state management
+- [x] Use sass for styling
+- [x] Use tape, react-test-utils, jsdom for testing
+- [x] automatic Unit and integration tests in dev (npm-watch)
+- [x] watch and process sass (npm-watch)
+- [x] keyboard controls for the game
 
 #### Commandline scripts
 Workflow | Command
